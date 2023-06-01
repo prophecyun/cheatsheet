@@ -9,9 +9,14 @@
 $EncryptionKeyBytes = New-Object Byte[] 32
 [Security.Cryptography.RNGCryptoServiceProvider]::Create().GetBytes($EncryptionKeyBytes)
 $EncryptionKeyBytes | Out-File "Desktop/encryption.key"
+
 #Use key to encrypt
 $EncryptionKeyData = Get-Content "Desktop/encryption.key"
-$secureString | ConvertFrom-SecureString -Key $EncryptionKeyData | Out-File -FilePath "Desktop/secret.encrypted"
+Get-Content plainstring.txt | ConvertTo-SecureString -AsPlainText -Force | `
+ConvertFrom-SecureString -Key $EncryptionKeyData | Out-File -FilePath "Desktop/secret.encrypted"
 #Use key to decrypt
 $PasswordSecureString = Get-Content "Desktop/secret.encrypted" | ConvertTo-SecureString -Key $EncryptionKeyData
-$PlainTextPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($PasswordSecureString))
+$PlainText = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR([System.Runtime.InteropServices.Marshal]::`
+SecureStringToBSTR($PasswordSecureString))  | Out-File "Desktop/secret.decrypted"
+
+#Split long line into multiple lines, use `
