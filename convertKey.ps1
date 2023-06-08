@@ -18,6 +18,9 @@ $k2 = (New-Object System.Net.WebClient).DownloadString('c:\users\user\desktop\ke
 $strArr = $k1 + $k2
 $byteArr = New-Object Byte[] 32
 $x=0
-foreach ($s in $strArr) {$int = [int]$s;  $byteArr[$x]=$int; $x++;}
+foreach ($s in $strArr) {$byteArr[$x]=[int]$s; $x++;}
+#byteArr can then be used as key for decryption
+
+#check the difference
 $key = get-content key
 Compare-Object -ReferenceObject $key -DifferenceObject $byteArr -IncludeEqual
