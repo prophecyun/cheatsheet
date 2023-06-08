@@ -1,4 +1,9 @@
-﻿#split key which is 32 byte array
+#create encryption key
+$EncryptionKeyBytes = New-Object Byte[] 32
+[Security.Cryptography.RNGCryptoServiceProvider]::Create().GetBytes($EncryptionKeyBytes)
+$EncryptionKeyBytes | out-file key
+ 
+#split key which is 32 byte array
 $key = get-content key
 $key1 = New-Object Byte[] 16
 $key2 = New-Object Byte[] 16
