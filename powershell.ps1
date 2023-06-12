@@ -4,6 +4,12 @@
  #Standard encryption, using user creds
  $encryString = ConvertFrom-SecureString $secureString
  
+ #Create a powershell credential object for future use
+ $username= 'domain\user'
+ $pw = 'test' | ConvertTo-SecureString -AsPlainText -force
+ $cred = New-Object System.Management.Automation.PSCredential $username,$pw
+ 
+ 
  #Encrypt with key
  #Generate key
 $EncryptionKeyBytes = New-Object Byte[] 32
