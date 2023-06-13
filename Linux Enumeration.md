@@ -1,12 +1,12 @@
 System
 
-    uname -a;
+    		uname -a;
 		cat /etc/*-release;
 		dmesg | grep Linux to read kernel. Need sudo
 
 Network	
  
-    ifconfig -a
+    		ifconfig -a
 		netstat -antup
 		cat /etc/resolv
 		arp -a
@@ -21,11 +21,11 @@ Processes
 
 Firewall
 
-    iptables -l
+    		iptables -l
 
 Scheduled tasks
 
-    crontab -l
+    		crontab -l
 
 Users
 
@@ -43,7 +43,7 @@ Logs
     
 Search 
 
-    grep -R "flag" /etc/flag/
+    		grep -R "flag" /etc/flag/
 
 Enum4linux
 
