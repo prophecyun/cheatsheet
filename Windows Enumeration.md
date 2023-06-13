@@ -1,10 +1,12 @@
 System
+
 		systeminfo
 		wmic bios get biosversion
-		set for env settings
+		set (for env settings)
 		ipconfig
 
 Processes
+
 		tasklist
 		wmic process where processid=x
 		wmic process get caption,commandline /format:list | findstr powershell.exe
@@ -12,41 +14,50 @@ Processes
 		*might want to see dlls loaded by processes
 		
 Services
+
 		net start to list running services
 		sc qc <service name> to get binary path and name, display name
 		
 Network
+
 		netstat -anob
 		arp
 		
 Firewall
+
 		netsh advfirewall firewall show allprofiles
 		netsh advfirewall firewall show rule name=all profile=domain
 		Show enabled rules (PS):
 		netsh advfirewall firewall show rule name=all profile=any | select-string -pattern "Yes" -exclude "Edge traversal" -context 2,11
 		
 Registry
+
 		reg query
 		User SID (logged in only) Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\
 		or use wmic useraccount get name,sid
 		wmic where name="xx" get sid
 	
 Event logs
+
 		wevtutil
 		wevtutil qe Security "/q:*[System [(EventID=4624)]]" /c:10 /f:text 
 		wevtutil qe Security "/q:*[System [(EventID=4624)] and EventData[Data[@Name='TargetUserName']='ralph']]" /f:text /c:5
 		User creation logs = ID 4720
 		
 Scheduled tasks
+
 		schtasks
+		schtasks /query /tn "name"
 	
 AV
+
 		use tasklist to find processes
 		find directories related to AVs
 		powershell "gwmi -namespace 'root\securitycenter2' -class antivirusproduct"
 		wmic /namespace:\\root\securitycenter2 path antivirusproduct
 	
 Shares
+
 		net use \\192.168.11.46\c$ /u:monty "IT&burns " to mount share as admin user monty
 			To do this on non-domain machine requires registry
 			reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System" /v "LocalAccountTokenFilterPolicy" /t REG_DWORD /d 1 /f
@@ -56,6 +67,7 @@ Shares
 		wmic share
 
 User
+
 		whoami /all		
 		query user (win server only)
 		net user [/domain]
@@ -72,11 +84,13 @@ User
 		get-acl 
 
 User Activity
+
 	Hashdumping and mimikatz require admin access (high integrity or SYSTEM)
 	Keylogging must be done in the target users session. 
 	If u have system, u can reach any user session and see filesystem
 
 Dumping password and hashes
+
 		Memory dump: procdump.exe
 		Backup stuff: ntdsutil.exe, vssadmin.exe (volume shadow copy)
 			ntdsutil
@@ -109,7 +123,7 @@ Remote enum
 
 
 SMB
-		Listing shares	
+	Listing shares	
 
 		smbmap -H <IP> -P <PORT> //null user
 		smbmap -u 'training28' -p 'password' -H 10.200.1.28 
@@ -134,12 +148,14 @@ SMB
 		nmap --script smb-os-discovery.nse -p445 10.200.1.28 
 
 RPC (Windows)
+
 		Can try --user='' --no-pass <target>
 		rpcclient --user='training28' 10.200.1.28 
 		srvinfo
 		other commands useful for domain enum
  	
 Search for nmap script
+
 		locate -r nse$ | grep telnet
 
 
