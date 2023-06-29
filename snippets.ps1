@@ -31,3 +31,6 @@ $keystrokes.GetEnumerator() | ForEach-Object {
     Write-Host $_.Key
     Write-Host $_.Value
 }
+
+#schtask
+schtasks /create /tn TaskName /tr "yourfile.exe arg1 arg2" /sc hourly /mo MON,TUE,WED,THU,FRI /st 09:00 /et 18:00 /du 0200:00 /f
